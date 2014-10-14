@@ -49,17 +49,17 @@ public class Drivers implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 60)
-    @Column(name = "firstName")
+    @Column(name = "firstName",insertable = true,updatable = true)
     private String firstName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 60)
-    @Column(name = "lastName")
+    @Column(name = "lastName",insertable = true,updatable = true)
     private String lastName;
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Users userId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "driverId", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "driverId", fetch = FetchType.LAZY,orphanRemoval = true)
     private Collection<DriversDestination> driversDestinationCollection;
 
     public Drivers() {

@@ -53,12 +53,12 @@ public class Users implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "Phonenumber")
+    @Column(name = "phonenumber", insertable = true,updatable = true)
     private String phonenumber;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "password")
+    @Column(name = "password", insertable = true,updatable = true)
     private String password;
    
   
@@ -87,6 +87,10 @@ public class Users implements Serializable {
         return phonenumber;
     }
 
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+    
     
 
     public String getPassword() {

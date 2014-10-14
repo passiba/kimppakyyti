@@ -37,9 +37,9 @@ public class LoginController implements Serializable {
     
     /**
      * Current user
-    
+    */
     @Inject @AuthenticatedUser
-    private Users user; */
+    private Users user; 
   
     private UserSessionBean getLoginFacade() {
         return userloginService;
@@ -60,9 +60,20 @@ public class LoginController implements Serializable {
     public void setNumber(String number) {
         this.number = number;
     }
-    public void save() {
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage("Welcome " + getNumber() + " " +  getPassword()));
+    public void authenticate() {
+
+        if (this.number != null) {
+            this.user = userloginService.getUser(number);
+            if (this.user != null) {
+                 FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage("Welcome user" + user.getPhonenumber() + " " + user.getPassword()));
+
+            }else
+            {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage("Welcome " + getNumber() + " " + getPassword()));
+            }
+        }
     }
      
 

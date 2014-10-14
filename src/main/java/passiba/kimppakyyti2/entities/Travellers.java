@@ -49,17 +49,17 @@ public class Travellers implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "firstName")
+    @Column(name = "firstName",insertable = true,updatable = true)
     private String firstName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 60)
-    @Column(name = "LastName")
+    @Column(name = "LastName",insertable = true,updatable = true)
     private String lastName;
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Users userId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "travellerId", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "travellerId", fetch = FetchType.LAZY,orphanRemoval = true)
     private Collection<TravellerDestination> travellerDestinationCollection;
 
     public Travellers() {

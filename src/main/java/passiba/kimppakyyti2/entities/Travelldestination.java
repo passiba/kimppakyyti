@@ -48,19 +48,19 @@ public class Travelldestination implements Serializable {
     @Column(name = "traveldestination_id")
     private Long traveldestinationId;
     @Size(max = 60)
-    @Column(name = "travelling_from")
+    @Column(name = "travelling_from",insertable = true,updatable = true)
     private String travellingFrom;
     @Size(max = 60)
-    @Column(name = "travelling_to")
+    @Column(name = "travelling_to",insertable = true,updatable = true)
     private String travellingTo;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "traveltime")
+    @Column(name = "traveltime",insertable = true,updatable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Date traveltime;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "traveldestinationId", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "traveldestinationId", fetch = FetchType.LAZY,orphanRemoval = true)
     private Collection<DriversDestination> driversDestinationCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "traveldestinationId", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "traveldestinationId", fetch = FetchType.LAZY,orphanRemoval = true)
     private Collection<TravellerDestination> travellerDestinationCollection;
 
     public Travelldestination() {

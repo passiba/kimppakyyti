@@ -25,13 +25,13 @@ DROP TABLE IF EXISTS `autoreitti`.`users` ;
 
 CREATE TABLE IF NOT EXISTS `autoreitti`.`users` (
   `user_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `Phonenumber` VARCHAR(20) NOT NULL,
+  `phonenumber` VARCHAR(20) NOT NULL,
   `password` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`user_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-CREATE UNIQUE INDEX `Phonenumber` ON `autoreitti`.`users` (`Phonenumber` ASC);
+CREATE UNIQUE INDEX `phonenumber` ON `autoreitti`.`users` (`phonenumber` ASC);
 
 
 -- -----------------------------------------------------
@@ -107,7 +107,7 @@ DROP TABLE IF EXISTS `autoreitti`.`travellers` ;
 CREATE TABLE IF NOT EXISTS `autoreitti`.`travellers` (
   `traveller_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `firstName` VARCHAR(50) NOT NULL,
-  `LastName` VARCHAR(60) NOT NULL,
+  `lastName` VARCHAR(60) NOT NULL,
   `user_id` BIGINT(20) NOT NULL,
   PRIMARY KEY (`traveller_id`),
   CONSTRAINT `fk_traveller_userid`

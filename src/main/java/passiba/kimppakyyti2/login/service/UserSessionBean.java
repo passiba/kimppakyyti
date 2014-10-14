@@ -63,4 +63,16 @@ public class UserSessionBean implements Serializable{
     public void logout(@Disposes @AuthenticatedUser Users user) {
         this.user = null;
     }
+    
+    /**
+     * Get user using the phonenumber
+     * @param -String phoenumber
+     * @return Users found user
+    *
+    */
+    public Users getUser(String phonenumer) {
+        return travellerService.getUser(phonenumer);
+    }
+    
+    
 }
