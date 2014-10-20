@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `autoreitti`.`users` (
   `user_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `phonenumber` VARCHAR(20) NOT NULL,
   `password` VARCHAR(20) NOT NULL,
+  `guest` boolean,
   PRIMARY KEY (`user_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;

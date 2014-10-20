@@ -26,6 +26,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -60,6 +61,13 @@ public class Users implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "password", insertable = true,updatable = true)
     private String password;
+    
+     /**
+     * True if this entity represents a guest
+     */
+    @Column(name = "guest", insertable = true,updatable = true)
+    private boolean guest;
+
    
   
     public Users() {
@@ -114,7 +122,15 @@ public class Users implements Serializable {
 
     }
 
+    public boolean isGuest() {
+        return guest;
+    }
 
+    public void setGuest(boolean guest) {
+        this.guest = guest;
+    }
+
+    
    
 
 

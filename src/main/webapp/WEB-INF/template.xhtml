@@ -1,0 +1,31 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<f:view contentType="text/html">
+    <h:head>
+        <title>Welcome to Kimppakyyti!</title>
+        <h:outputStylesheet library="css" name="site.css"/>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+    </h:head>
+    <h:body>
+        <div class="content">
+            <h:graphicImage library="images" name="kimppakyyti_logo.png"/>
+            <span class="smallTxt">Welcome to Kimppakyyti!</span>
+            <div class="actionBar">
+                <h:form>
+                     <h:link rendered="#{KimppakyytiDisplay.guest}" outcome="/login/login.xhtml">Login</h:link>
+                    <h:commandLink rendered="#{!KimppakyytiDisplay.guest}" action="#{KimppakyytiDisplay.logout}">Logout</h:commandLink>
+                </h:form>
+              
+            </div>
+            <div class="divider"></div>
+            <ui:insert name="content"/>
+        </div>
+    </h:body>
+</f:view>
+</html>
