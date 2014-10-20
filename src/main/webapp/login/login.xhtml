@@ -5,8 +5,15 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/WEB-INF/template.xhtml">
+        
+        
+    <ui:define name="content">
     <h:head>
-        <title>${bundle.AppName}</title>
+        <title>${bundle.WelcomeMessage}</title>
+                <h:outputStylesheet name="css/jsfcrud.css"/>
+                <h:outputStylesheet name="css/site.css"/>
+                <h:outputScript library="js" name="jsfcrud.js"/>
     </h:head>
     <h:body>
         <h:form>
@@ -31,5 +38,7 @@
             </p:panel>
         </h:form>
     </h:body>
+    </ui:define>
+    </ui:composition>
 </html>
 
