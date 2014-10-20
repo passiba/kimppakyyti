@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/WEB-INF/template.xhtml">
+        <ui:define name="content">
+
+            <h:head>
+                <title>${bundle.WelcomeMessage}</title>
+                <h:outputStylesheet name="css/jsfcrud.css"/>
+                <h:outputStylesheet name="css/site.css"/>
+            </h:head>
+            <h:body>
+                <h:form id="mainForm">
+                    <div class="content">
+
+
+                        <p:growl id="growl" sticky="true" showDetail="true"/>
+
+                        <p:wizard flowListener="#{userWizard.onFlowProcess}">
+                            <p:tab id="user" title="User">
+                                <p:panel header="User Details">
+                                    <p:messages />
+                                    <h:panelGrid columns="2" columnClasses="label, value">
+                                        <h:outputText value="Phone number: *" />
+                                        <p:inputText value="#{userWizard.user.phonenumber}" required="true" label="phonenumber"/>
+ 
+                                        
+                                          <h:outputLabel for="password"  value="#{bundle.password} : *"/>
+                                          <p:password id="password" value="#{userWizard.user.password}" label="Password" required="true" />
+                                          <p:message for="password"  display="icon" />
+                                        
+                                          <h:outputLabel for="password2"  value="#{bundle.confirm_password} : *"/>
+                                          <p:password id="password2" value="#{userWizard.user.password}" label="Password2" required="true" />
+                                          <p:message for="password2"  display="icon" />
+                                        
+                                         <h:outputText value="Skip to last: " />
+                                        <h:selectBooleanCheckbox value="#{userWizard.skip}" />
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab id="Traveller" title="Traveller Details">
+                                <p:panel header="Traveller Details">
+                                    <p:messages />
+                                    <h:panelGrid columns="2" columnClasses="label, value">
+                                        <h:outputText value="FistName: " />
+                                        <p:inputText value="#{userWizard.firstName}" />
+
+                                        <h:outputText value="Lastname: " />
+                                        <p:inputText value="#{userWizard.lastname}" />
+
+                                        <h:outputText value="is Driver: " />
+                                        <p:selectBooleanCheckbox value="#{userWizard.isDriver}" />
+                                          
+                                        
+                                        <h:outputText value="Skip to last: " />
+                                        <h:selectBooleanCheckbox value="#{userWizard.skip}" />
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab id="TravelDestination" title="Travel Destination">
+                                <p:panel header="Travel Destination">
+                                    <p:messages />
+                                    <h:panelGrid columns="2" columnClasses="label, value">
+                                        <h:outputText value="Travelling from: *" />
+                                        <p:inputText value="#{userWizard.destination.travellingFrom}" required="true" label="Travelling from"/>
+
+                                        <h:outputText value="Travelling to: * " />
+                                        <p:inputText value="#{userWizard.destination.travellingTo}"  required="true" label="Travelling from"/>
+
+                                        <p:outputLabel for="datetime" value="Datetime:" />
+                                        <p:calendar id="datetime" value="#{userWizard.destination.traveltime}" pattern="dd/MM/yyyy HH:mm:ss" />
+ 
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab id="confirm" title="Confirmation">
+                                <p:panel header="Confirmation">
+                                    <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
+                                        
+                                           <h:panelGrid columns="2" columnClasses="label, value">
+                                            <h:outputText value="Phone: " />
+                                            <h:outputText value="#{userWizard.user.phonenumber}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="Password: " />
+                                            <h:outputText value="#{userWizard.user.password}" styleClass="outputLabel"/>
+
+                                          
+                                        </h:panelGrid>
+
+                                        <h:panelGrid columns="2" columnClasses="label, value">
+                                            <h:outputText value="Firstname: " />
+                                            <h:outputText value="#{userWizard.firstname}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="Lastname: " />
+                                            <h:outputText value="#{userWizard.lastname}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="Is Driver: " />
+                                            <h:outputText value="#{userWizard.isDriver}" styleClass="outputLabel"/>
+                                        </h:panelGrid>
+
+                                     
+                                        <h:panelGrid columns="2" columnClasses="label, value">
+                                            <h:outputText value="Travelling from: " />
+                                            <h:outputText value="#{userWizard.destination.travellingFrom}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="Phone " />
+                                            <h:outputText value="#{userWizard.destination.travellingTo}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="Travel time: " />
+                                            <h:outputText value="#{userWizard.destination.traveltime}" styleClass="outputLabel"/>
+
+                                            <h:outputText />
+                                            <h:outputText />
+                                        </h:panelGrid>
+                                    </h:panelGrid>
+
+                                    <p:commandButton value="Submit" actionListener="#{userWizard.save}" update="growl" process="@this"/>
+                                </p:panel>
+                            </p:tab>
+                        </p:wizard>
+                    </div>
+                </h:form>
+            </h:body>
+
+        </ui:define>
+    </ui:composition>  
+</html>

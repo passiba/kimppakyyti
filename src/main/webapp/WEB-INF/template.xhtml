@@ -18,7 +18,8 @@
             <span class="smallTxt">Welcome to Kimppakyyti!</span>
             <div class="actionBar">
                 <h:form>
-                     <h:link rendered="#{KimppakyytiDisplay.guest}" outcome="/login/login.xhtml">Login</h:link>
+                     <h:link rendered="#{KimppakyytiDisplay.guest}" outcome="/login/login.xhtml">Login</h:link><br/>
+                     <h:link rendered="#{KimppakyytiDisplay.guest}" outcome="/users/UserWizard.xhtml">Register</h:link>
                     <h:commandLink rendered="#{!KimppakyytiDisplay.guest}" action="#{KimppakyytiDisplay.logout}">Logout</h:commandLink>
                 </h:form>
               
