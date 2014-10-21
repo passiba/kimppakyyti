@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+        xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/WEB-INF/template.xhtml">
+    <ui:define name="content">
+      
+    <h:head>
+        <title>#{bundle.step3_title}</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+        <h:outputStylesheet name="css/site.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+    </h:head>
+    <h:body>
+        <p:panel id="panel" header="Confirmation">
+                    <h:form>
+                        <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
+
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputText value="Password: " />
+                                <h:outputText value="#{usersController.password}" styleClass="outputLabel"/>
+
+
+                                <h:outputText value="Phone " />
+                                       
+                     <h:outputText value="#{usersController.phoneNumber}" styleClass="outputLabel"/>
+
+
+                                <h:outputText />
+                                <h:outputText />
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputText value="Firstname: " />
+                                <h:outputText value="#{usersController.firstName}" styleClass="outputLabel"/>
+
+                                <h:outputText value="Lastname: " />
+                                <h:outputText value="#{usersController.lastName}" styleClass="outputLabel"/>
+
+
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="2" columnClasses="label, value">
+
+                                <h:outputText value="Travelling from: " />
+                                <h:outputText value="#{usersController.travellingFrom}" styleClass="outputLabel" />
+
+                                <h:outputText value="Travelling to: " />
+                                <h:outputText value="#{usersController.travellingTo}" styleClass="outputLabel"/>
+
+
+
+                                <h:outputText value="Traveltime: " />
+                                <h:outputText value="#{usersController.travelltime}" styleClass="outputLabel"/>
+
+                                <h:outputText value="is Driver: " />
+                                <h:outputText value="#{usersController.isDriver}" styleClass="outputLabel"/>
+
+                            </h:panelGrid> 
+                            
+                             </h:panelGrid>
+                            <p:commandButton value="Finish"
+                                             ajax="false" async="false"
+                                             action="#{usersController.create2}"/>
+                            
+                            <p:commandButton value="Cancel" ajax="false" async="false" action="#{usersController.cancel}"/>
+                    </h:form>   
+                </p:panel> 
+    </h:body>
+         </ui:define>
+        </ui:composition>
+</html>

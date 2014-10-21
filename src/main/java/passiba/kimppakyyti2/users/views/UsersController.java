@@ -6,31 +6,223 @@ import passiba.kimppakyyti2.users.views.util.JsfUtil.PersistAction;
 import passiba.kimppakyyti2.users.beans.UsersFacade;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
+import java.util.Date;
+import javax.validation.constraints.Size;
+import org.primefaces.event.SelectEvent;
+import passiba.kimppakyyti2.login.service.TravellerSessionBeanLocal;
+import passiba.kimppakyyti2.login.service.TravellerSessionBeanLocal;
 
 @Named("usersController")
-@SessionScoped
+@ConversationScoped
 public class UsersController implements Serializable {
 
-    @EJB
+    @Inject
     private passiba.kimppakyyti2.users.beans.UsersFacade ejbFacade;
+    
+    @Inject @MessageBundle
+    private transient ResourceBundle bundle;
+    
+    
     private List<Users> items = null;
     private Users selected;
+    
+     /** Navigation Step - 2
+     */
+    private static final String NAVIGATION_STEP_2 = "step2";
+
+    /**
+     * Navigation Step - 3
+     */
+    private static final String NAVIGATION_STEP_3 = "step3";
+
+
+    /**
+     * User name for the user
+     */
+    @Size(min=5,max=30,message="{step1_usernameSize}")
+    private String username;
+    @Size(min=2,max=50)
+    private String travellingFrom,travellingTo;
+    
+    private Date travelltime;
+    
+    private boolean isDriver;
+
+    /**
+     * Password
+     */
+    private String password;
+
+    /**
+     * First name
+     */
+    @Size(min=2,max=30,message="{step2_firstNameSize}")
+    private String firstName;
+
+    /**
+     * Last name
+     */
+    @Size(min=2,max=30,message="{step2_lastNameSize}")
+    private String lastName;
+    
+     /**
+     * Conversation - this bean is conversationally scoped.
+     */
+    @Inject
+    private Conversation conversation;
+
+    /**
+     * User email - creates the account
+     */
+    @EJB
+    private TravellerSessionBeanLocal userService;
+
+    /**
+     * Password confirmation
+     */
+    @Size(min=8,max=30,message="{step1_passwordSize}")
+    private String passwordConfirm;
+
+    /**
+     * Phone number
+     */
+    private  String phoneNumber ; 
+
+   // private PhoneNumber phoneNumber;
+    
+     /**
+     * True if step 1 has been completed
+     */
+    private boolean step1;
+
+    /**
+     * True if step 2 has been completed
+     */
+    private boolean step2;
+
+
+     /**
+     * Starts the conversation for creating a new account
+     */
+    @PostConstruct
+    public void beginAccountCreateConversation() {
+        if(conversation.getId() == null) {
+            conversation.begin();
+        }
+    }
+    
+    
+    
 
     public UsersController() {
     }
+    
+    
+    
+        /**
+     * Processes the first step which is entry of the login information.
+     * @return step2
+     */
+    public String processFirstStep() {
+        
+        
+        if(!password.equals(this.passwordConfirm)) {
+            String passwordMustMatch = "Passwords must match";
+            //bundle.getString(ResourceBundleKeys.step1_passwordMustMatch.getKey());
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,passwordMustMatch,passwordMustMatch));
+            // TODO check the database to see if we already have a user with the same name
 
+            
+            return null;
+            
+        }
+    
+        step1 = true;
+        return NAVIGATION_STEP_2;
+    }
+    
+     /**
+     * Process the second step which is entry of the biographical data
+     * @return step3
+     */
+    public String processSecondStep() {
+        // comparing travelling from and travelling to values
+        
+        if(travellingTo.equals(travellingFrom)) {
+            String departureAndDestinaionMustNotMatch ="Departure and Destination cannot be the same";
+                    //bundle.getString(ResourceBundleKeys.step1_passwordMustMatch.getKey());
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,departureAndDestinaionMustNotMatch,departureAndDestinaionMustNotMatch));
+            return null; 
+        }
+        
+        //check that traveltime is not set to past
+        Calendar daycalculator= new java.util.GregorianCalendar();
+        if(travelltime.before(daycalculator.getTime()))
+        {
+             String traveltimeIsInPast = "Travel time can not be  in past ";
+//bundle.getString(ResourceBundleKeys.step2_traveltimeIsInPast.getKey());
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,traveltimeIsInPast,traveltimeIsInPast));
+            return null; 
+                    
+        }
+        step2 = true;
+        return NAVIGATION_STEP_3;
+    }
+    
+      /**
+     * Creates the bidder
+     * @return home page
+     */
+    public String create2() {
+        if(!step1 || !step2) {
+            String txt = "skipped the steps";
+                //bundle.getString(ResourceBundleKeys.step3_skippedSteps.getKey());
+            FacesContext.getCurrentInstance().addMessage("",
+                new FacesMessage(txt,txt));
+            return PageNavigationEnum.CREATE_ACCOUNT.toString();
+        }
+        
+      /*  BazaarAccount user = new BazaarAccount(firstName,lastName,username,password,address,new Date(),true);
+        user.addBillingInfo(creditCard);
+        userService.createUser(selected);*/
+        conversation.end();
+        //confirmation phonenumber
+        String txt="Confirmation message sent to customer";
+//bundle.getString(ResourceBundleKeys.step3_confirmatinPhonenumber.getKey());
+        FacesContext.getCurrentInstance().addMessage("",new FacesMessage(txt,txt));
+        return PageNavigationEnum.HOME.toString();
+    }
+
+    /**
+     * Cancels creation - closes out the bean etc.
+     * @return home
+     */
+    public String cancel() {
+        conversation.end();
+        return PageNavigationEnum.HOME.toString();
+    }
     public Users getSelected() {
         return selected;
     }
@@ -39,11 +231,7 @@ public class UsersController implements Serializable {
         this.selected = selected;
     }
 
-    protected void setEmbeddableKeys() {
-    }
-
-    protected void initializeEmbeddableKey() {
-    }
+   
 
     private UsersFacade getFacade() {
         return ejbFacade;
@@ -51,7 +239,7 @@ public class UsersController implements Serializable {
 
     public Users prepareCreate() {
         selected = new Users();
-        initializeEmbeddableKey();
+      
         return selected;
     }
 
@@ -83,7 +271,6 @@ public class UsersController implements Serializable {
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
-            setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
@@ -161,5 +348,89 @@ public class UsersController implements Serializable {
         }
 
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getTravellingFrom() {
+        return travellingFrom;
+    }
+
+    public void setTravellingFrom(String travellingFrom) {
+        this.travellingFrom = travellingFrom;
+    }
+
+    public String getTravellingTo() {
+        return travellingTo;
+    }
+
+    public void setTravellingTo(String travellingTo) {
+        this.travellingTo = travellingTo;
+    }
+    
+    /*
+    fired upon Calendar date selection in order to change date
+    
+    */
+    public void onDateSelect(SelectEvent event) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+    }
+
+    public Date getTravelltime() {
+        return travelltime;
+    }
+
+    public void setTravelltime(Date travelltime) {
+        this.travelltime = travelltime;
+    }
+
+    public boolean isIsDriver() {
+        return isDriver;
+    }
+
+    public void setIsDriver(boolean isDriver) {
+        this.isDriver = isDriver;
+    }
+       
+    
 
 }
