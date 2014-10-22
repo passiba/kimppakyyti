@@ -14,46 +14,50 @@
                 <h:outputScript library="js" name="jsfcrud.js"/>
             </h:head>
             <h:body>
-                <p:panel id="panel" header="User Information">
+               
+                    <p:tab id="personal" title="Personal">
+                        <p:panel id="panel" header="User Information">
 
-                    <h:form>
-
-
-                        <p:messages id="msgs" />
-                        <p:messages />
-                        <h:outputText value="#{bundle.step1_instructions}"/>
-                        <h:panelGrid columns="2"  columnClasses="label, value">
+                            <h:form>
 
 
-                            <h:outputLabel for="password" value="#{bundle.step1_password}"/>
-
-                            <p:password id="password" match="confirmPassword" label="#{bundle.password}" required="true"
-                                        requiredMessage="#{bundle.step1_passwordRequired}" inline="true"  size="30" value="#{usersController.password}"/>
-                           
-                            <h:outputLabel for="confirmPassword" value="#{bundle.step1_confirmPassword}"/>
-
-                            <p:password id="confirmPassword" inline="true" label="#{bundle.step1_confirmPassword}" required="true"
-                                        requiredMessage="#{bundle.step1_confirmPasswordRequired}" size="30" value="#{usersController.passwordConfirm}"/>
-                            
-
-                            <h:outputLabel for="phonenumber" escape="false" value="#{bundle.phonenumber}"/>
-
-                            <p:inputText id="phonenumber" size="30" required="true" value="#{usersController.phoneNumber}"
-                                         requiredMessage="#{bundle.step1_phoneRequired}"/>
-                           
+                                <p:messages id="msgs" />
+                             
+                                <h:outputText value="#{bundle.step1_instructions}"/>
+                                <h:panelGrid columns="2"  columnClasses="label, value">
 
 
-                        </h:panelGrid>
+                                    <h:outputLabel for="password" value="#{bundle.step1_password}"/>
 
-                        <p:commandButton value="#{bundle.cancel}" ajax="false" async="false"  action="#{usersController.cancel}"/>
-                        <p:commandButton value="#{bundle.next}"  ajax="false" async="false" action="#{usersController.processFirstStep}"/>
+                                    <p:password id="password" match="confirmPassword" label="#{bundle.password}" required="true"
+                                                requiredMessage="#{bundle.step1_passwordRequired}" inline="true"  size="30" value="#{usersController.user.password}"/>
+
+                                    <h:outputLabel for="confirmPassword" value="#{bundle.step1_confirmPassword}"/>
+
+                                    <p:password id="confirmPassword" inline="true" label="#{bundle.step1_confirmPassword}" required="true"
+                                                requiredMessage="#{bundle.step1_confirmPasswordRequired}" size="30" value="#{usersController.user.passwordConfirm}"/>
+
+
+                                    <h:outputLabel for="phonenumber" escape="false" value="#{bundle.phonenumber}"/>
+
+                                    <p:inputText id="phonenumber" size="30" required="true" value="#{usersController.user.phoneNumber}"
+                                                 requiredMessage="#{bundle.step1_phoneRequired}"/>
 
 
 
-                    </h:form>
-                </p:panel>
+                                </h:panelGrid>
+                     
+                                <p:commandButton value="#{bundle.cancel}" ajax="false" async="false"  action="#{usersController.cancel}"/>
+                                <p:commandButton value="#{bundle.next}"  ajax="false" async="false" action="#{usersController.processFirstStep}"/>
+
+
+
+                            </h:form>
+                        </p:panel>
+                    </p:tab>
+            
             </h:body>
-
+          
         </ui:define>
     </ui:composition>  
 </html>

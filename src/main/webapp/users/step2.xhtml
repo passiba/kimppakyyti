@@ -19,34 +19,34 @@
                 <p:panel id="panel" header="Personal Details">
 
                     <h:form>
-                        <p:messages />
+                       
                         <p:messages id="msgs" />
                         <h:panelGrid columns="2" columnClasses="label, value">
                             <h:outputText value="#{bundle.step2_firstName}: *" />
                             <p:inputText  id="firstName"
                                           requiredMessage="#{bundle.step2_firstNameRequired}"
-                                          required="true" value="#{usersController.firstName}"/>
+                                          required="true" value="#{usersController.user.firstName}"/>
 
 
                             <h:outputText value="#{bundle.step2_lastName}: *" />
                             <p:inputText id="lastName" required="true"
                                          requiredMessage="#{bundle.step2_lastNameRequired}"
-                                         value="#{usersController.lastName}"/>
+                                         value="#{usersController.user.lastName}"/>
                             <h:outputText value="Travelling from: *" />
                             <p:inputText  id="travellingfrom" 
                                           requiredMessage="#{bundle.step2_travellingFromRequired}"
-                                          required="true" value="#{usersController.travellingFrom}"/>
+                                          required="true" value="#{usersController.user.travellingFrom}"/>
 
                             <h:outputText value="#{bundle.step2_travellingto}: *" />
                             <p:inputText  id="travellingto" 
                                           required="true" requiredMessage="#{bundle.step2_travellingToReguired}"
-                                          value="#{usersController.travellingTo}"/>
+                                          value="#{usersController.user.travellingTo}"/>
 
                             <h:outputText value="#{bundle.step2_traveltime}: *" />
-                            <p:calendar id="travelltime" value="#{usersController.travelltime}" pattern="dd/MM/yyyy HH:mm:ss" />
+                            <p:calendar id="travelltime" value="#{usersController.user.travelltime}" pattern="dd/MM/yyyy HH:mm:ss" />
 
                             <h:outputText value="#{bundle.step2_isDriver}" />
-                            <h:selectBooleanCheckbox value="#{usersController.isDriver}" />
+                            <h:selectBooleanCheckbox value="#{usersController.user.isDriver}" />
                         </h:panelGrid>        
 
 

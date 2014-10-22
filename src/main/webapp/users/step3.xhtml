@@ -19,12 +19,12 @@
 
                             <h:panelGrid columns="2" columnClasses="label, value">
                                 <h:outputText value="Password: " />
-                                <h:outputText value="#{usersController.password}" styleClass="outputLabel"/>
+                                <h:outputText value="#{usersController.user.password}" styleClass="outputLabel"/>
 
 
                                 <h:outputText value="Phone " />
                                        
-                     <h:outputText value="#{usersController.phoneNumber}" styleClass="outputLabel"/>
+                     <h:outputText value="#{usersController.user.phoneNumber}" styleClass="outputLabel"/>
 
 
                                 <h:outputText />
@@ -32,10 +32,10 @@
                             </h:panelGrid>
                             <h:panelGrid columns="2" columnClasses="label, value">
                                 <h:outputText value="Firstname: " />
-                                <h:outputText value="#{usersController.firstName}" styleClass="outputLabel"/>
+                                <h:outputText value="#{usersController.user.firstName}" styleClass="outputLabel"/>
 
                                 <h:outputText value="Lastname: " />
-                                <h:outputText value="#{usersController.lastName}" styleClass="outputLabel"/>
+                                <h:outputText value="#{usersController.user.lastName}" styleClass="outputLabel"/>
 
 
                             </h:panelGrid>
@@ -43,18 +43,18 @@
                             <h:panelGrid columns="2" columnClasses="label, value">
 
                                 <h:outputText value="Travelling from: " />
-                                <h:outputText value="#{usersController.travellingFrom}" styleClass="outputLabel" />
+                                <h:outputText value="#{usersController.user.travellingFrom}" styleClass="outputLabel" />
 
                                 <h:outputText value="Travelling to: " />
-                                <h:outputText value="#{usersController.travellingTo}" styleClass="outputLabel"/>
+                                <h:outputText value="#{usersController.user.travellingTo}" styleClass="outputLabel"/>
 
 
 
                                 <h:outputText value="Traveltime: " />
-                                <h:outputText value="#{usersController.travelltime}" styleClass="outputLabel"/>
+                                <h:outputText value="#{usersController.user.travelltime}" styleClass="outputLabel"/>
 
                                 <h:outputText value="is Driver: " />
-                                <h:outputText value="#{usersController.isDriver}" styleClass="outputLabel"/>
+                                <h:outputText value="#{usersController.user.isDriver}" styleClass="outputLabel"/>
 
                             </h:panelGrid> 
                             

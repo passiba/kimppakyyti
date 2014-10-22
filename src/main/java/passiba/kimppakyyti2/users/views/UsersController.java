@@ -28,21 +28,31 @@ import javax.inject.Inject;
 import java.util.Date;
 import javax.validation.constraints.Size;
 import org.primefaces.event.SelectEvent;
+import passiba.kimppakyyti2.login.bean.AuthenticatedUser;
 import passiba.kimppakyyti2.login.service.TravellerSessionBeanLocal;
 import passiba.kimppakyyti2.login.service.TravellerSessionBeanLocal;
 
 @Named("usersController")
 @ConversationScoped
-public class UsersController implements Serializable {
+public class UsersController implements Serializable{
 
     @Inject
     private passiba.kimppakyyti2.users.beans.UsersFacade ejbFacade;
     
     @Inject @MessageBundle
     private transient ResourceBundle bundle;
-    
-    
+     
     private List<Users> items = null;
+    
+    private User user=new User();
+    
+    /**
+     * User
+     */
+     @Inject @AuthenticatedUser
+    private Users currentUser;
+
+    
     private Users selected;
     
      /** Navigation Step - 2
@@ -55,34 +65,6 @@ public class UsersController implements Serializable {
     private static final String NAVIGATION_STEP_3 = "step3";
 
 
-    /**
-     * User name for the user
-     */
-    @Size(min=5,max=30,message="{step1_usernameSize}")
-    private String username;
-    @Size(min=2,max=50)
-    private String travellingFrom,travellingTo;
-    
-    private Date travelltime;
-    
-    private boolean isDriver;
-
-    /**
-     * Password
-     */
-    private String password;
-
-    /**
-     * First name
-     */
-    @Size(min=2,max=30,message="{step2_firstNameSize}")
-    private String firstName;
-
-    /**
-     * Last name
-     */
-    @Size(min=2,max=30,message="{step2_lastNameSize}")
-    private String lastName;
     
      /**
      * Conversation - this bean is conversationally scoped.
@@ -96,16 +78,7 @@ public class UsersController implements Serializable {
     @EJB
     private TravellerSessionBeanLocal userService;
 
-    /**
-     * Password confirmation
-     */
-    @Size(min=8,max=30,message="{step1_passwordSize}")
-    private String passwordConfirm;
-
-    /**
-     * Phone number
-     */
-    private  String phoneNumber ; 
+   
 
    // private PhoneNumber phoneNumber;
     
@@ -145,7 +118,9 @@ public class UsersController implements Serializable {
     public String processFirstStep() {
         
         
-        if(!password.equals(this.passwordConfirm)) {
+        if(user!=null && user.getPassword() !=null  && user.getPasswordConfirm()!=null
+               
+               && ! (user.getPassword().compareTo(user.getPasswordConfirm())==0)) {
             String passwordMustMatch = "Passwords must match";
             //bundle.getString(ResourceBundleKeys.step1_passwordMustMatch.getKey());
             FacesContext.getCurrentInstance().addMessage(null,
@@ -168,7 +143,9 @@ public class UsersController implements Serializable {
     public String processSecondStep() {
         // comparing travelling from and travelling to values
         
-        if(travellingTo.equals(travellingFrom)) {
+        if(user!=null && user.getTravellingTo() !=null  && user.getTravellingFrom() !=null
+               
+               &&  (user.getTravellingTo().compareTo(user.getTravellingFrom())==0)) {
             String departureAndDestinaionMustNotMatch ="Departure and Destination cannot be the same";
                     //bundle.getString(ResourceBundleKeys.step1_passwordMustMatch.getKey());
             FacesContext.getCurrentInstance().addMessage(null,
@@ -176,9 +153,9 @@ public class UsersController implements Serializable {
             return null; 
         }
         
-        //check that traveltime is not set to past
-        Calendar daycalculator= new java.util.GregorianCalendar();
-        if(travelltime.before(daycalculator.getTime()))
+        //check that traveltime is not set to pastr
+        
+        if(user.getTravelltime().before(Calendar.getInstance().getTime()))
         {
              String traveltimeIsInPast = "Travel time can not be  in past ";
 //bundle.getString(ResourceBundleKeys.step2_traveltimeIsInPast.getKey());
@@ -349,87 +326,15 @@ public class UsersController implements Serializable {
 
     }
 
-    public String getPassword() {
-        return password;
+    public User getUser() {
+        return user;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getTravellingFrom() {
-        return travellingFrom;
-    }
-
-    public void setTravellingFrom(String travellingFrom) {
-        this.travellingFrom = travellingFrom;
-    }
-
-    public String getTravellingTo() {
-        return travellingTo;
-    }
-
-    public void setTravellingTo(String travellingTo) {
-        this.travellingTo = travellingTo;
+    public void setUser(User user) {
+        this.user = user;
     }
     
-    /*
-    fired upon Calendar date selection in order to change date
     
-    */
-    public void onDateSelect(SelectEvent event) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
-    }
-
-    public Date getTravelltime() {
-        return travelltime;
-    }
-
-    public void setTravelltime(Date travelltime) {
-        this.travelltime = travelltime;
-    }
-
-    public boolean isIsDriver() {
-        return isDriver;
-    }
-
-    public void setIsDriver(boolean isDriver) {
-        this.isDriver = isDriver;
-    }
        
     
 
