@@ -17,6 +17,11 @@
             <h:body>
                 <h:form id="mainForm">
                     <div class="content">
+                        
+                        <p:contentFlow value="#{travellerImagesView.images}" var="image">
+                            <p:graphicImage name="/images/traveller/#{image}" styleClass="content" />
+                            <div class="caption">#{image}</div>
+                        </p:contentFlow>
                        
                         <br />
                         <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
