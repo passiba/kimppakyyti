@@ -18,7 +18,7 @@
             <h:body>
                 <p:panel id="panel" header="Personal Details">
 
-                    <h:form>
+                    <h:form id="mainForm">
                        
                         <p:messages id="msgs" />
                         <h:panelGrid columns="2" columnClasses="label, value">
@@ -42,7 +42,7 @@
                                           required="true" requiredMessage="#{bundle.step2_travellingToReguired}"
                                           value="#{usersController.user.travellingTo}"/>
 
-                            <h:outputText value="#{bundle.step2_traveltime}: *" />
+                            <h:outputLabel value="#{bundle.step2_traveltime}: *" for="travelltime"/>
                             <p:calendar id="travelltime" value="#{usersController.user.travelltime}" pattern="dd/MM/yyyy HH:mm:ss" />
 
                             <h:outputText value="#{bundle.step2_isDriver}" />

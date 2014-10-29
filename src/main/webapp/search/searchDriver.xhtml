@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/WEB-INF/template.xhtml">
+        <ui:define name="content">
+
+            <h:head>
+                <title>${search_driver_title}</title>
+                <h:outputStylesheet name="css/jsfcrud.css"/>
+                <h:outputStylesheet name="css/site.css"/>
+                <h:outputScript library="js" name="jsfcrud.js"/>
+            </h:head>
+            <h:body>
+                <h:form id="mainForm">
+                    
+                        <p:messages id="msgs" />
+                        <h:panelGrid columns="3" cellpadding="5">
+                    
+                        <p:panel header="${bundle.search_driver_info}">
+                            <h:outputText value="${bundle.search_driver_drivingFrom}: *" />
+                            <p:inputText  id="travellingfrom" 
+                                          requiredMessage="#{bundle.step2_travellingFromRequired}"
+                                          required="true" value="#{driverSearchController.travellingFrom}"/>
+
+                            <h:outputText value="#{bundle.search_driver_drivingTo}: *" />
+                            <p:inputText  id="travellingto" 
+                                          required="true" requiredMessage="#{bundle.search_driver_drivingToReguired}"
+                                          value="#{driverSearchController.travellingTo}"/>
+                         </p:panel>
+                        </h:panelGrid>
+                        <p:commandButton value="Search" action="#{driverSearchController.processSerach}" />
+                        
+       
+                </h:form>
+            </h:body>
+
+        </ui:define>
+    </ui:composition>           
+</html>
+

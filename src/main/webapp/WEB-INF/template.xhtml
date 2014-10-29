@@ -20,7 +20,8 @@
             <div class="actionBar">
                 <h:form>
                      <h:link rendered="#{KimppakyytiDisplay.guest}" outcome="/login/login.xhtml">Login</h:link><br/>
-                     <h:link rendered="#{KimppakyytiDisplay.guest}" outcome="/users/UserWizard.xhtml">Register</h:link>
+                     <h:link rendered="#{KimppakyytiDisplay.guest}" outcome="/users/UserWizard.xhtml">Register</h:link><br/>
+                      <h:link rendered="#{KimppakyytiDisplay.guest}" outcome="/search/searchDriver.xhtml">Search Driver</h:link>
                     <h:commandLink rendered="#{!KimppakyytiDisplay.guest}" action="#{KimppakyytiDisplay.logout}">Logout</h:commandLink>
                 </h:form>
               
@@ -36,7 +37,7 @@
                 <p:menuitem value="Register" outcome="/users/UserWizard.xhtml" icon="ui-icon-person">
                     <f:param name="i" value="2" />
                 </p:menuitem>
-                <p:menuitem value="Search" outcome="/index.xhtml" icon="ui-icon-search">
+                <p:menuitem value="Search Driver" outcome="/search/searchDriver.xhtml" icon="ui-icon-search">
                     <f:param name="i" value="3" />
                 </p:menuitem>
                 <p:menuitem value="Documentation" outcome="/index.xhtml" icon="ui-icon-document">

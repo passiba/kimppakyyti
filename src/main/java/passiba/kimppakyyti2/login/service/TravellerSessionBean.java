@@ -15,6 +15,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import passiba.kimppakyyti2.login.bean.AnonymousUser;
 import passiba.kimppakyyti2.entities.Users;
+import passiba.kimppakyyti2.users.views.User;
 
 /**
  *
@@ -59,6 +60,11 @@ public class TravellerSessionBean implements TravellerSessionBeanLocal {
         entityManager.persist(user);
     }
 
+    @Override
+    public void createUser(User user) {
+        
+    }
+    
     @Override
     public Users getAuthenticatedUser() {
        Principal principal = context.getCallerPrincipal();

@@ -18,7 +18,7 @@
                     <p:tab id="personal" title="Personal">
                         <p:panel id="panel" header="User Information">
 
-                            <h:form>
+                            <h:form id="mainForm">
 
 
                                 <p:messages id="msgs" />
@@ -40,8 +40,10 @@
 
                                     <h:outputLabel for="phonenumber" escape="false" value="#{bundle.phonenumber}"/>
 
+                                  <!--  <p:inputMask id="phonenumber" size="30" required="true" value="#{usersController.user.phoneNumber}"
+                                                 requiredMessage="#{bundle.step1_phoneRequired}" mask="(999) 999999999999999"/>-->
                                     <p:inputText id="phonenumber" size="30" required="true" value="#{usersController.user.phoneNumber}"
-                                                 requiredMessage="#{bundle.step1_phoneRequired}"/>
+                                                 requiredMessage="#{bundle.step1_phoneRequired}" />
 
 
 

@@ -1,13 +1,9 @@
 package passiba.kimppakyyti2.users.views;
 
-import passiba.kimppakyyti2.entities.Users;
-import passiba.kimppakyyti2.users.views.util.JsfUtil;
-import passiba.kimppakyyti2.users.views.util.JsfUtil.PersistAction;
-import passiba.kimppakyyti2.users.beans.UsersFacade;
-
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -17,7 +13,6 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -25,12 +20,18 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
-import java.util.Date;
+import javax.inject.Named;
 import javax.validation.constraints.Size;
 import org.primefaces.event.SelectEvent;
+import passiba.kimppakyyti2.driver.service.DriverSessionBeanLocal;
+import passiba.kimppakyyti2.entities.Drivers;
+import passiba.kimppakyyti2.entities.Users;
+import passiba.kimppakyyti2.login.bean.AnonymousUser;
 import passiba.kimppakyyti2.login.bean.AuthenticatedUser;
 import passiba.kimppakyyti2.login.service.TravellerSessionBeanLocal;
-import passiba.kimppakyyti2.login.service.TravellerSessionBeanLocal;
+import passiba.kimppakyyti2.users.beans.UsersFacade;
+import passiba.kimppakyyti2.users.views.util.JsfUtil;
+import passiba.kimppakyyti2.users.views.util.JsfUtil.PersistAction;
 
 @Named("usersController")
 @ConversationScoped
@@ -41,10 +42,12 @@ public class UsersController implements Serializable{
     
     @Inject @MessageBundle
     private transient ResourceBundle bundle;
-     
+    
+      
     private List<Users> items = null;
     
-    private User user=new User();
+    
+    private User user = new User();
     
     /**
      * User
@@ -78,7 +81,8 @@ public class UsersController implements Serializable{
     @EJB
     private TravellerSessionBeanLocal userService;
 
-   
+    @EJB
+    private  DriverSessionBeanLocal driverSerivce;
 
    // private PhoneNumber phoneNumber;
     
@@ -182,8 +186,25 @@ public class UsersController implements Serializable{
         }
         
       /*  BazaarAccount user = new BazaarAccount(firstName,lastName,username,password,address,new Date(),true);
-        user.addBillingInfo(creditCard);
-        userService.createUser(selected);*/
+        user.addBillingInfo(creditCard*/
+        
+        
+        if(currentUser!= null && currentUser instanceof AnonymousUser && user!=null)
+        {
+            currentUser.setPassword(user.getPassword());
+            currentUser.setPhonenumber(user.getPhoneNumber());
+            currentUser.setGuest(false);
+            userService.createUser(currentUser);
+            
+            //check whatever the user is driver
+            if(user.isDriver)
+            {
+                
+                driverSerivce.createDriver(user,currentUser);
+            }
+              
+        }
+       
         conversation.end();
         //confirmation phonenumber
         String txt="Confirmation message sent to customer";
