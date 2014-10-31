@@ -23,7 +23,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.Size;
 import org.primefaces.event.SelectEvent;
-import passiba.kimppakyyti2.driver.service.DriverSessionBeanLocal;
+import passiba.kimppakyyti2.driver.service.DriversFacade;
 import passiba.kimppakyyti2.entities.Drivers;
 import passiba.kimppakyyti2.entities.Users;
 import passiba.kimppakyyti2.login.bean.AnonymousUser;
@@ -39,6 +39,9 @@ public class UsersController implements Serializable{
 
     @Inject
     private passiba.kimppakyyti2.users.beans.UsersFacade ejbFacade;
+    
+    @Inject
+    private passiba.kimppakyyti2.driver.service.DriversFacade driverFacade;
     
     @Inject @MessageBundle
     private transient ResourceBundle bundle;
@@ -78,12 +81,8 @@ public class UsersController implements Serializable{
     /**
      * User email - creates the account
      */
-    @EJB
-    private TravellerSessionBeanLocal userService;
-
-    @EJB
-    private  DriverSessionBeanLocal driverSerivce;
-
+   
+  
    // private PhoneNumber phoneNumber;
     
      /**
@@ -194,13 +193,16 @@ public class UsersController implements Serializable{
             currentUser.setPassword(user.getPassword());
             currentUser.setPhonenumber(user.getPhoneNumber());
             currentUser.setGuest(false);
-            userService.createUser(currentUser);
+            //userService.createUser(currentUser);
+            
+            Users newuser=currentUser;
+            //getUserserviceFacade().createUser(newuser);
             
             //check whatever the user is driver
             if(user.isDriver)
             {
                 
-                driverSerivce.createDriver(user,currentUser);
+                        driverFacade.createDriver(user,newuser);
             }
               
         }
@@ -235,6 +237,10 @@ public class UsersController implements Serializable{
         return ejbFacade;
     }
 
+    public DriversFacade getDriverFacade() {
+        return driverFacade;
+    }
+    
     public Users prepareCreate() {
         selected = new Users();
       

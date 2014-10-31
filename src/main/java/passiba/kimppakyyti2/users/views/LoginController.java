@@ -19,7 +19,6 @@ import passiba.kimppakyyti2.entities.Users;
 import passiba.kimppakyyti2.login.bean.AuthenticatedUser;
 import passiba.kimppakyyti2.login.service.TravellerSessionBeanLocal;
 import passiba.kimppakyyti2.login.service.UserSessionBean;
-import passiba.kimppakyyti2.users.beans.UsersFacade;
 
 /**
  *

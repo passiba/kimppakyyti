@@ -25,7 +25,7 @@ public interface TravellerSessionBeanLocal {
     Users getUser(long userId);
 
     /**
-     * Retrieves the user provided the pohnenumber
+     * Retrieves the user provided the phonenumber
      * @param String- phonumber
      * @return Users
      */
@@ -38,12 +38,7 @@ public interface TravellerSessionBeanLocal {
      */
     void createUser(Users user);
     
-    /**
-     * Sets the user
-     *
-     * @param user - user
-     */
-    void createUser(User user);
+   
     /**
      * Returns the current user
      * @return users

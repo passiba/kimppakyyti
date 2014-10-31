@@ -60,10 +60,7 @@ public class TravellerSessionBean implements TravellerSessionBeanLocal {
         entityManager.persist(user);
     }
 
-    @Override
-    public void createUser(User user) {
-        
-    }
+   
     
     @Override
     public Users getAuthenticatedUser() {
