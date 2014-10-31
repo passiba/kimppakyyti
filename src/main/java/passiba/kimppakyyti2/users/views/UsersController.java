@@ -238,7 +238,7 @@ public class UsersController implements Serializable{
         return ejbFacade;
     }
 
-    public DriversFacade getDriverFacade() {
+    private DriversFacade getDriverFacade() {
         return driverFacade;
     }
 
