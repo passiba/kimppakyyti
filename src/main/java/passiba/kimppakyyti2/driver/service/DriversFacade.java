@@ -22,7 +22,7 @@ import passiba.kimppakyyti2.users.views.User;
  * @author pauline
  */
 @Stateless
-public class DriversFacade extends AbstractFacade<Drivers> implements DriversFacadeLocal {
+public class DriversFacade extends AbstractFacade<Drivers> {
     @PersistenceContext(unitName = "passiba_kimppakyyti2_war_1.0-SNAPSHOTPU")
     private EntityManager em;
     
@@ -34,6 +34,19 @@ public class DriversFacade extends AbstractFacade<Drivers> implements DriversFac
      
     @Inject
     private UserFacade userejbFacade;
+    
+    
+   /* @EJB
+    private DriversDestinationFacadeLocal driverDestinationFacade;
+   
+    @EJB
+    private TravelldestinationFacadeLocal travellDestinationFacade;
+     
+    @EJB
+    private UsersFacadeLocal userejbFacade;*/
+    
+    
+    
   
 
     @Override
@@ -44,17 +57,29 @@ public class DriversFacade extends AbstractFacade<Drivers> implements DriversFac
     public DriversFacade() {
         super(Drivers.class);
     }
-    public DriversDestinationFacade getDriverDestinationFacade() {
+   private DriversDestinationFacade getDriverDestinationFacade() {
         return driverDestinationFacade;
     }
 
-    public TravelldestinationFacade getTravellDestinationFacade() {
+    private TravelldestinationFacade getTravellDestinationFacade() {
         return travellDestinationFacade;
     }
 
-    public UserFacade getUserejbFacade() {
+    private  UserFacade getUserejbFacade() {
         return userejbFacade;
     }
+
+    /*public void setDriverDestinationFacade(DriversDestinationFacade driverDestinationFacade) {
+        this.driverDestinationFacade = driverDestinationFacade;
+    }
+
+    public void setTravellDestinationFacade(TravelldestinationFacade travellDestinationFacade) {
+        this.travellDestinationFacade = travellDestinationFacade;
+    }
+
+    public void setUserejbFacade(UserFacade userejbFacade) {
+        this.userejbFacade = userejbFacade;
+    }*/
     
     private void createDriverDestinations(User user,Drivers driver)
     {
@@ -89,7 +114,7 @@ public class DriversFacade extends AbstractFacade<Drivers> implements DriversFac
      -@param User user
       @praam Users currentUser
     */
-    @Override
+    
     public void createDriver(User user,Users currentUser) {
         
         if (user != null && user.getFirstName() != null

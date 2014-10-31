@@ -49,12 +49,13 @@ public class UsersController implements Serializable{
       
     private List<Users> items = null;
     
-    
+   
     private User user = new User();
     
     /**
      * User
      */
+    
      @Inject @AuthenticatedUser
     private Users currentUser;
 
@@ -195,14 +196,14 @@ public class UsersController implements Serializable{
             currentUser.setGuest(false);
             //userService.createUser(currentUser);
             
-            Users newuser=currentUser;
+           
             //getUserserviceFacade().createUser(newuser);
             
             //check whatever the user is driver
             if(user.isDriver)
             {
                 
-                        driverFacade.createDriver(user,newuser);
+                        driverFacade.createDriver(user,currentUser);
             }
               
         }
@@ -240,6 +241,8 @@ public class UsersController implements Serializable{
     public DriversFacade getDriverFacade() {
         return driverFacade;
     }
+
+   
     
     public Users prepareCreate() {
         selected = new Users();

@@ -16,7 +16,7 @@ import passiba.kimppakyyti2.entities.Travelldestination;
  * @author pauline
  */
 @Stateless
-public class TravelldestinationFacade extends AbstractFacade<Travelldestination> implements TravelldestinationFacadeLocal {
+public class TravelldestinationFacade extends AbstractFacade<Travelldestination> {
     @PersistenceContext(unitName = "passiba_kimppakyyti2_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 

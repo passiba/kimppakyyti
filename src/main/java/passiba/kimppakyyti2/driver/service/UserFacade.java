@@ -16,7 +16,7 @@ import passiba.kimppakyyti2.entities.Users;
  * @author pauline
  */
 @Stateless
-public class UserFacade extends AbstractFacade<Users> implements UsersFacadeLocal {
+public class UserFacade extends AbstractFacade<Users>  {
     @PersistenceContext(unitName = "passiba_kimppakyyti2_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 

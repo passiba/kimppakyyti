@@ -16,7 +16,7 @@ import passiba.kimppakyyti2.entities.DriversDestination;
  * @author pauline
  */
 @Stateless
-public class DriversDestinationFacade extends AbstractFacade<DriversDestination> implements DriversDestinationFacadeLocal {
+public class DriversDestinationFacade extends AbstractFacade<DriversDestination>  {
     @PersistenceContext(unitName = "passiba_kimppakyyti2_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
